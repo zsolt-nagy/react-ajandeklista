@@ -1,14 +1,54 @@
 import './App.css';
+import React from 'react';
 import Lista from './Components/Lista/Lista';
 import Szűrő from './Components/Szűrő/Szűrő';
 import Űrlap from './Components/Űrlap/Űrlap';
 
 function App() {
+  const [ajándékLista, setAjándékLista] = React.useState([
+    {
+        név: 'Joghurt',
+        célszemély: 'Popeye',
+        ár: 179,
+        fontosság: 85,
+        id: 1
+    },
+    {
+        név: 'React book for dummies',
+        célszemély: 'Attila',
+        ár: 8000,
+        fontosság: 95,
+        id: 2
+    },
+    {
+        név: 'Reszkessetek Betörők 2 DVD',
+        célszemély: 'Steven Spielberg',
+        ár: 2990,
+        fontosság: 90,
+        id: 3
+    }
+  ]);
+
+  function felveszAjándék(név, célszemély, ár, fontosság) {
+    setAjándékLista(
+      [
+        ...ajándékLista, 
+        {
+          név,
+          célszemély,
+          ár,
+          fontosság,
+          id: ajándékLista.length + 1 // TODO: id generálása fontos lesz
+        }
+      ]
+    );
+  }
+
   return (
     <div className="App">
       <h1>Ajándéklista</h1>
-      <Űrlap />
-      <Lista />
+      <Űrlap felveszAjándék={felveszAjándék} />
+      <Lista lista={ajándékLista} />
       <Szűrő />
     </div>
   );
