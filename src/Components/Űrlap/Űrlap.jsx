@@ -5,20 +5,33 @@ export default function Űrlap(props) {
     const ajándékNévEl = React.useRef(null);
     const ajándékÁrEl = React.useRef(null);
     const ajándékFontosságaEl = React.useRef(null);
+    const sliderValueEl = React.useRef(null);
+
+    const [fontosság, setFontosság] = React.useState(50);
+
     const handleSubmit = (event) => {
         event.preventDefault();
         const célszemélyValue = célszemélyEl.current.value;
         const ajándékNévValue = ajándékNévEl.current.value;
         const ajándékÁrValue = ajándékÁrEl.current.value;
-        const ajándékFontosságaValue = ajándékFontosságaEl.current.value;
 
         props.felveszAjándék(
             ajándékNévValue, 
             célszemélyValue, 
             ajándékÁrValue, 
-            ajándékFontosságaValue
+            fontosság
         );
 
+        célszemélyEl.current.value = '';
+        ajándékNévEl.current.value = '';
+        ajándékÁrEl.current.value = '';
+        setFontosság(50);
+    }
+
+    const handleSliderChange = (event) => {
+        // ajándékFontosságaEl.current.value 
+        // event.target.value
+        setFontosság(event.target.value);
     }
 
     return (
@@ -62,14 +75,17 @@ export default function Űrlap(props) {
                 </div>
                 <div className="form-row">
                     <label>
-                        Ajándék fontossága (0-10):
+                        Ajándék fontossága (0%-100%):
                         <input 
                             type="range" 
                             min="0" 
                             max="100" 
                             step="5" 
+                            value={fontosság}
                             ref={ajándékFontosságaEl}
+                            onChange={handleSliderChange}
                             name="ajandek-fontossága"  />
+                        <span ref={sliderValueEl}>{fontosság}%</span>
                     </label>
                 </div>
                 <div className="form-row">
