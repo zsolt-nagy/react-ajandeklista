@@ -4,6 +4,8 @@ import Lista from './Components/Lista/Lista';
 import Szűrő from './Components/Szűrő/Szűrő';
 import Űrlap from './Components/Űrlap/Űrlap';
 
+// uuidv4 import 
+
 function App() {
   const [ajándékLista, setAjándékLista] = React.useState([
     {
@@ -28,6 +30,8 @@ function App() {
         id: 3
     }
   ]);
+  const [nextId, setNextId] = React.useState(4); // TODO: állapot egybeolvasztása
+
 
   function felveszAjándék(név, célszemély, ár, fontosság) {
     setAjándékLista(
@@ -38,10 +42,11 @@ function App() {
           célszemély,
           ár,
           fontosság,
-          id: ajándékLista.length + 1 // TODO: id generálása fontos lesz
+          id: nextId
         }
       ]
     );
+    setNextId(nextId + 1);  // TODO: állapot összevonása
   }
 
   return (
