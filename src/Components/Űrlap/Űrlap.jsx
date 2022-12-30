@@ -1,38 +1,43 @@
 import React from 'react'
 
 export default function Űrlap(props) {
-    const célszemélyEl = React.useRef(null);
-    const ajándékNévEl = React.useRef(null);
-    const ajándékÁrEl = React.useRef(null);
-    const ajándékFontosságaEl = React.useRef(null);
-    const sliderValueEl = React.useRef(null);
-
+    const [név, setNév] = React.useState('');
+    const [célszemély, setCélszemély] = React.useState('');
+    const [ár, setÁr] = React.useState('');
     const [fontosság, setFontosság] = React.useState(50);
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        const célszemélyValue = célszemélyEl.current.value;
-        const ajándékNévValue = ajándékNévEl.current.value;
-        const ajándékÁrValue = ajándékÁrEl.current.value;
 
-        props.felveszAjándék(
-            ajándékNévValue, 
-            célszemélyValue, 
-            ajándékÁrValue, 
-            fontosság
-        );
+        props.felveszAjándék(név, célszemély, ár, fontosság);
 
-        célszemélyEl.current.value = '';
-        ajándékNévEl.current.value = '';
-        ajándékÁrEl.current.value = '';
+        setNév('');
+        setCélszemély(''); 
+        setÁr('');
         setFontosság(50);
     }
 
-    const handleSliderChange = (event) => {
-        // ajándékFontosságaEl.current.value 
-        // event.target.value
-        setFontosság(event.target.value);
+    const getChangeHandler = setter => event => setter(event.target.value);
+    const handleNévChange = getChangeHandler(setNév);
+    const handleCélszemélyChange = getChangeHandler(setCélszemély);
+    const handleÁrChange = getChangeHandler(setÁr);
+    const handleFontosságChange = getChangeHandler(setFontosság);
+
+    
+/*  // Ha nem érted a fenti 5 sort, akkor használd az alábbi verziót
+    const handleNévChange = (event) => {
+        setNév(event.target.value);
     }
+    const handleCélszemélyChange = (event) => {
+        setCélszemély(event.target.value);
+    }
+    const handleÁrChange = (event) => {
+        setÁr(event.target.value);
+    }
+    const handleFontosságChange = (event) => {
+        setFontosság(event.target.value);
+    } 
+*/   
 
     return (
         <>
@@ -48,7 +53,8 @@ export default function Űrlap(props) {
                         <input 
                             type="text" 
                             name="ajandek-celszemely" 
-                            ref={célszemélyEl}
+                            value={célszemély}
+                            onChange={handleCélszemélyChange}
                             required />
                     </label>
                 </div>                
@@ -58,7 +64,8 @@ export default function Űrlap(props) {
                         <input 
                             type="text" 
                             name="ajandek-nev" 
-                            ref={ajándékNévEl}
+                            value={név}
+                            onChange={handleNévChange}
                             required />
                     </label>
                 </div>
@@ -69,7 +76,8 @@ export default function Űrlap(props) {
                             type="number" 
                             min="1" 
                             name="ajandek-ar" 
-                            ref={ajándékÁrEl}
+                            value={ár}
+                            onChange={handleÁrChange}
                             required />
                     </label>
                 </div>
@@ -82,10 +90,9 @@ export default function Űrlap(props) {
                             max="100" 
                             step="5" 
                             value={fontosság}
-                            ref={ajándékFontosságaEl}
-                            onChange={handleSliderChange}
+                            onChange={handleFontosságChange}
                             name="ajandek-fontossága"  />
-                        <span ref={sliderValueEl}>{fontosság}%</span>
+                        <span>{fontosság}%</span>
                     </label>
                 </div>
                 <div className="form-row">
