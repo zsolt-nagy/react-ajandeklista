@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import './Űrlap.css';
 
 export default function Űrlap(props) {
     const [név, setNév] = React.useState('');
