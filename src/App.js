@@ -7,13 +7,13 @@ import Űrlap from './Components/Űrlap/Űrlap';
 // uuidv4 import 
 
 function App() {
-  const [ajándékLista, setAjándékLista] = React.useState([
-    {
-        név: 'Joghurt',
-        célszemély: 'Popeye',
-        ár: 179,
-        fontosság: 85,
-        id: 1
+  const [state, setState] = React.useState({
+    ajándékLista: [{
+      név: 'Joghurt',
+      célszemély: 'Popeye',
+      ár: 179,
+      fontosság: 85,
+      id: 1
     },
     {
         név: 'React book for dummies',
@@ -28,32 +28,32 @@ function App() {
         ár: 2990,
         fontosság: 90,
         id: 3
-    }
-  ]);
-  const [nextId, setNextId] = React.useState(4); // TODO: állapot egybeolvasztása
+    }],
+    nextId: 4
+  });
 
 
   function felveszAjándék(név, célszemély, ár, fontosság) {
-    setAjándékLista(
-      [
-        ...ajándékLista, 
+    setState({
+      ajándékLista: [
+        ...state.ajándékLista, 
         {
           név,
           célszemély,
           ár,
           fontosság,
-          id: nextId
+          id: state.nextId
         }
-      ]
-    );
-    setNextId(nextId + 1);  // TODO: állapot összevonása
+      ],
+      nextId: state.nextId + 1
+    });
   }
 
   return (
     <div className="App">
       <h1>Ajándéklista</h1>
       <Űrlap felveszAjándék={felveszAjándék} />
-      <Lista lista={ajándékLista} />
+      <Lista lista={state.ajándékLista} />
       <Szűrő />
     </div>
   );
