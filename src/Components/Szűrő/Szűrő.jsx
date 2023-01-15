@@ -16,7 +16,7 @@ export default function Szűrő(props) {
           type="checkbox" 
           name="kihúzottak_elrejtése" 
           checked={elrejtKihúzott}
-          onClick={toggleElrejtKihúzott} />
+          onChange={toggleElrejtKihúzott} />
         Kihúzottak elrejtése
       </label>
     </section>
