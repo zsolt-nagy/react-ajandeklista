@@ -1,5 +1,5 @@
 import './App.css';
-import React from 'react';
+import React, {useState} from 'react';
 import Lista from './Components/Lista/Lista';
 import Szűrő from './Components/Szűrő/Szűrő';
 import Űrlap from './Components/Űrlap/Űrlap';
@@ -7,7 +7,7 @@ import Űrlap from './Components/Űrlap/Űrlap';
 // uuidv4 import 
 
 function App() {
-  const [state, setState] = React.useState({
+  const [state, setState] = useState({
     ajándékLista: [{
       név: 'Joghurt',
       célszemély: 'Popeye',
@@ -34,7 +34,11 @@ function App() {
     }],
     nextId: 4
   });
+  const [elrejtKihúzott, setElrejtKihúzott] = useState(false);
 
+  function toggleElrejtKihúzott(újÉrték) {
+    setElrejtKihúzott(újÉrték);
+  }
 
   function felveszAjándék(név, célszemély, ár, fontosság) {
     setState({
@@ -82,8 +86,9 @@ function App() {
       <Lista 
         lista={state.ajándékLista} 
         törölAjándék={törölAjándék} 
-        toggleKihúzAjándék={toggleKihúzAjándék} />
-      <Szűrő />
+        toggleKihúzAjándék={toggleKihúzAjándék}
+        elrejtKihúzott={elrejtKihúzott} />
+      <Szűrő toggleElrejtKihúzott={toggleElrejtKihúzott} />
     </div>
   );
 }

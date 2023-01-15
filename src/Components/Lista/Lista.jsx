@@ -11,15 +11,18 @@ export default function Lista(props) {
         props.törölAjándék(e.target.dataset.id);
     }
 
-    const jsxLista = props.lista.map(elem => (
-        <li key={elem.id} className={elem.kihúzva ? "kihúzva" : ""}>
-            {elem.célszemély}: {elem.név} ({elem.ár}) {elem.fontosság}% 
-            <button onClick={toggleKihúz} data-id={elem.id}>
-                {elem.kihúzva ? "Visszaállít" : "Kihúzás"}
-            </button>
-            <button onClick={töröl} data-id={elem.id}>Törlés</button>
-        </li>
-    ));
+    const jsxLista = props
+        .lista
+        .filter(elem => !props.elrejtKihúzott || elem.kihúzva === false)
+        .map(elem => (
+            <li key={elem.id} className={elem.kihúzva ? "kihúzva" : ""}>
+                {elem.célszemély}: {elem.név} ({elem.ár}) {elem.fontosság}% 
+                <button onClick={toggleKihúz} data-id={elem.id}>
+                    {elem.kihúzva ? "Visszaállít" : "Kihúzás"}
+                </button>
+                <button onClick={töröl} data-id={elem.id}>Törlés</button>
+            </li>
+        ));
 
     return (
         <>
