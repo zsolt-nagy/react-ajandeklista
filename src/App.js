@@ -13,6 +13,7 @@ function App() {
       célszemély: 'Popeye',
       ár: 179,
       fontosság: 85,
+      kihúzva: false,
       id: 1
     },
     {
@@ -20,6 +21,7 @@ function App() {
         célszemély: 'Attila',
         ár: 8000,
         fontosság: 95,
+        kihúzva: false,
         id: 2
     },
     {
@@ -27,6 +29,7 @@ function App() {
         célszemély: 'Steven Spielberg',
         ár: 2990,
         fontosság: 90,
+        kihúzva: false,
         id: 3
     }],
     nextId: 4
@@ -42,6 +45,7 @@ function App() {
           célszemély,
           ár,
           fontosság,
+          kihúzva: false,
           id: state.nextId
         }
       ],
@@ -49,11 +53,36 @@ function App() {
     });
   }
 
+  function törölAjándék(id) {
+    const ajándékLista = 
+      state.ajándékLista.filter(ajándék => String(ajándék.id) !== id);  
+      setState({
+        ajándékLista,
+        nextId: state.nextId
+      });      
+  }
+
+  function toggleKihúzAjándék(id) {
+    const ajándékLista = state.ajándékLista.map(ajándék => {
+      if (String(ajándék.id) === id) {
+        ajándék.kihúzva = !ajándék.kihúzva;
+      }
+      return ajándék;
+    });
+    setState({
+      ajándékLista,
+      nextId: state.nextId
+    });
+  }
+
   return (
     <div className="App">
       <h1>Ajándéklista</h1>
       <Űrlap felveszAjándék={felveszAjándék} />
-      <Lista lista={state.ajándékLista} />
+      <Lista 
+        lista={state.ajándékLista} 
+        törölAjándék={törölAjándék} 
+        toggleKihúzAjándék={toggleKihúzAjándék} />
       <Szűrő />
     </div>
   );
